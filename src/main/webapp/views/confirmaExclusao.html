@@ -1,0 +1,17 @@
+<div class="modal fade" id="apagarModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><h3 class="modal-title"><i class="fa fa-exclamation-circle"></i> Atenção!</h3></div>
+            
+            <div class="modal-body">
+                <h4>Tem certeza que deseja excluir {{dadosExclusao.nomeEntidade}} 
+                     <b>" {{dadosExclusao.nomeRegistro}} "</b> ? </h4>
+                <p>Essa ação não pode ser desfeita.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" ng-click="excluiRegistro()">Sim</button>
+                <button class="btn btn-default" data-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>

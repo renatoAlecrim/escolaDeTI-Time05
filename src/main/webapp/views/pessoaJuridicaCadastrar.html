@@ -1,0 +1,123 @@
+<div ng-init="carregar()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovaJuridica">Cadastrar pessoa jurídica</div>
+        <div class="panel-title" ng-show="!isNovaJuridica">Alterar pessoa jurídica</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
+            <div class="form-group">    
+                <label for="nome" class="col-md-2 control-label">Nome:</label>
+                <div class="col-md-10"><input type="text" ng-model="juridica.nome" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>
+            </div>
+
+            <div ng-show="formCad.nome.$dirty && formCad.nome.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.nome.$error.required">Preencha seu nome completo. </span>
+                <span ng-show="formCad.nome.$error.minlength">Nome deve ter mais de 3 caracteres. </span>
+                <span ng-show="formCad.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres. </span>
+            </div>
+
+            <div class="form-group"> 
+                <label for="cnpj" class="col-md-2 control-label">CNPJ:</label>
+                <div class="col-md-10"><input type="" ng-model="juridica.cnpj.cnpj" id="cnpj" name="cnpj" maxlength="18" required="" cnpj-unique class="form-control cnpj requerido"></div>
+            </div>
+
+            <div ng-show="formCad.cnpj.$dirty && formCad.cnpj.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.cnpj.$error.required">Preencha o CNPJ. </span>
+                <span ng-show="formCad.cnpj.$error.cnpj">CNPJ invalido. </span>
+                <span ng-show="formCad.cnpj.$error.uncnpj">CNPJ já cadastrado. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">E-mail: </label>
+                <div class="col-md-10"><input type="email" ng-model="juridica.email.email" id="email" name="email" required="" email-unique class="form-control requerido"></div>
+            </div>
+
+            <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.email.$error.required">Preencha seu e-mail. </span>
+                <span ng-show="formCad.email.$error.email">Coloque um e-mail válido. </span>
+                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="cep" class="col-md-2 control-label">CEP: </label>
+                <div class="col-md-2"><input type="text" ng-model="juridica.cep" id="cep" name="cep" required="" class="form-control cep requerido"></div>
+
+                <label for="uf" class="col-md-1 control-label">Estado: </label>
+                <div class="col-md-2" ng-init="listarEstados()">
+                    <select ng-model="juridica.codigoestado" ng-change="listarCidades();
+                                        juridica.codigoibge = ''" id="uf" name="uf" required="" class="form-control requerido">
+                        <option value="">Selecione um estado</option>
+                        <!-- FAZER BUSCA POR ESTADOS -->
+                        <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
+                    </select>                   
+                </div>
+                <label for="cidade" class="col-md-1 control-label">Cidade: </label>
+                <div class="col-md-3">
+                    <select ng-model="juridica.codigoibge" id="cidade" name="cidade"  required="" class="form-control requerido">
+                        <option value="" ng-if="juridica.codigoestado == ''">Aguardando estado...</option>
+                        <option value="" ng-if="juridica.codigoestado != ''" >Selecione uma cidade</option>
+                        <!-- FAZER BUSCA POR CIDADES -->
+                        <option ng-repeat="c in cidades" ng-selected="cidadeSelecionada(c.codigoibge)" value="{{c.codigoibge}}">{{c.descricao}}</option>
+                        <!--<option ng-repeat="c in cidades" ng-if="juridica.codigoibge == c.codigoibge" selected="true" value="{{c.codigoibge}}">{{c.descricao}}</option>-->
+                    </select>
+                </div>              
+            </div>
+
+            <div ng-show="(formCad.cep.$dirty && formCad.cep.$invalid) || (formCad.uf.$dirty && formCad.uf.$invalid) || (formCad.cidade.$dirty && formCad.cidade.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.cep.$error.required">Preencha CEP. </span>
+                <span ng-show="formCad.uf.$error.required">Selecione estado. </span>
+                <span ng-show="formCad.cidade.$error.required">Selecione cidade. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="endereco" class="col-md-2 control-label">Endereço: </label>
+                <div class="col-md-10 form-group">
+                    <div class="col-md-5 col-sm-8"><input type="text" ng-model="juridica.logradouro" id="logradouro" name="logradouro" required="" class="form-control requerido" placeholder="Logradouro (Rua, Estrada, etc)"></div>
+                    <div class="col-md-2 col-sm-4"><input type="text" ng-model="juridica.numero" id="numero" name="numero" required="" class="form-control requerido" maxlength="10" placeholder="nº"></div>
+                </div>
+            </div>
+
+            <div ng-show="(formCad.logradouro.$dirty && formCad.logradouro.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.logradouro.$error.required">Preencha o endereço. </span>
+            </div>
+
+            <div ng-show="(formCad.numero.$dirty && formCad.numero.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.numero.$error.required">Preencha o número. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="complemento" class="col-md-2 control-label">Complemento: </label>
+                <div class="col-md-3"><input type="text" ng-model="juridica.complemento" id="complemento" name="complemento" class="form-control"></div>
+                <label for="bairro" class="col-md-1 control-label">Bairro: </label>
+                <div class="col-md-3"><input type="text" ng-model="juridica.bairro" id="bairro" name="bairro" required="" class="form-control requerido"></div>
+            </div>
+
+            <div ng-show="formCad.bairro.$dirty && formCad.bairro.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.bairro.$error.required">Preencha o bairro. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
+                <div class="col-md-3"><input type="text" ng-model="juridica.telefone.telefone" id="telefone" name="telefone" required="" class="form-control sp_celphones requerido" placeholder="(99) 99999-9999"></div>
+                <label for="telefone" class="col-md-2 control-label">Telefone secundário: </label>
+                <div class="col-md-3"><input type="text" ng-model="juridica.telefonesecundario.telefone" id="telefoneSecundario" name="telefoneSecundario" class="form-control sp_celphones" placeholder="(99) 99999-9999"></div>
+            </div>
+
+            <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.telefone.$error.required">Preencha o telefone principal. </span>
+            </div>
+        </form>  
+    </div>
+</div>
+
+<div>
+    <button ng-show="isNovaJuridica" ng-click="salvar(); resetJur(formCad);" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-hide="isNovaJuridica" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovaJuridica" ng-click="resetJur(formCad)" class="btn btn-info">Limpar</button>
+</div>
+
+<script src="js/webcam.js" type="text/javascript"></script>
+<script src="js/ng-camera.js" type="text/javascript"></script>

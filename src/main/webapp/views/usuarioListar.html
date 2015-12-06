@@ -1,0 +1,75 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Usuários cadastrados</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"> </ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'status'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'status', busca.descricao, 'ok', true)">Status</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome', busca.descricao, 'ok', true)">Nome</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'login'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'login', busca.descricao, 'ok', true)">Login</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'email'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'email', busca.descricao, 'ok', true)">E-mail</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', '')">
+                    <tr ng-repeat='u in dadosRecebidos.itens.listaDeRegistros'>
+                        <td>
+                            <span class="badge badge-{{corStatus[u.status]}}">&nbsp;</span>
+                        </td>
+                        <td>{{u.nome}}</td>
+                        <td>{{u.login}}</td>
+                        <td class="hidden-sm hidden-xs">{{u.email}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editar(u.idusuario)">Editar</a></li>
+                                    <li ng-show="u.status === 'ATIVO'"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Bloquear acesso</a></li>
+                                    <li ng-show="u.status === 'INATIVO'"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Liberar acesso</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+        
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <span class="badge badge-success">&nbsp;</span> &nbsp Usuário liberado &nbsp&nbsp&nbsp
+                <span class="badge badge-danger">&nbsp;</span> &nbsp Usuário bloqueado &nbsp&nbsp&nbsp
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div>
+    <a ng-href="#/Usuario/novo" class="btn btn-success">Cadastrar novo</a>        
+</div>
+
+

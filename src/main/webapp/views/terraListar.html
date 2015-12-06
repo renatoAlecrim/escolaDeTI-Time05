@@ -1,0 +1,55 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Terras indígenas cadastradas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"></ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomeTerra'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomeTerra', busca.descricao, 'ok', true)">Terra indígena</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'cidade'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'cidade', busca.descricao, 'ok', true)">Cidade</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal, '', '', '')">
+                    <tr ng-repeat='t in dadosRecebidos.itens.listaDeRegistros' >
+                        <td>{{t.nometerra}}</td>
+                        <td>{{t.cidade}} - {{t.sigla}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarTerra(t)">Editar</a></li>
+                                    <li><a ng-click="confirmaExclusao('terraIndigena', 'terra indígena', t.nometerra, t.idterraindigena)">Excluir</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+    </div>
+</div>
+<div>
+    <a ng-href="#/TerraIndigena/nova" class="btn btn-success">Cadastrar nova</a>
+</div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

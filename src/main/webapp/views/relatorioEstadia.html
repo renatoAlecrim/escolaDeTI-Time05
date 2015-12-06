@@ -1,0 +1,76 @@
+<div ng-init="novoRelEstadia()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" >Estadias de Indígenas na Assindi</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formConvenio" novalidate="" class="form-horizontal">
+            <div class="form-group">    
+                <label for="periodoinicial" class="col-md-2 control-label">Periodo:</label>
+                <div class="col-md-3">
+                    <input type="date" ng-model="relatorioestadia.dataini" id="descricao" name="descricao" class="form-control" ng-minlength=3 ng-maxlength=30>
+                </div>
+                <label for="periodofinal" class="col-md-1 control-label" style="margin-right: 5%">à</label>
+                <div class="col-md-3">
+                    <input type="date" ng-model="relatorioestadia.datafim" id="descricao" name="descricao" class="form-control" ng-minlength=3 ng-maxlength=30>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="familia" class="col-md-2 control-label" >Familia: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="getFamilias()">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioestadia.familias" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione as famílias"
+                                 options="familia.nomefamilia for familia in familias" 
+                                 scroll-after-rows="8" ng-change="carregarMembros(relatorioestadia.familia.idfamilia)">
+                    </multiselect>
+                </div>
+                <label for="etnia" class="col-md-2 control-label" style="position: relative; margin-left: -2%;">Etnia: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="getEtnias()">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioestadia.etnias" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione as etnias"
+                                 options="etnia.descricao for etnia in etnias" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Representante: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="carregarIndios()">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioestadia.representantes" 
+                                 multiple="true" 
+                                 ms-selected ="{{indios.selected.length}}" 
+                                 ms-header="Selecione os representantes"
+                                 options="representante.nome for representante in indios" 
+                                 scroll-after-rows="8" required="">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="form-group" ng-init="getTerras()">
+                <label for="terraIndigena" class="col-md-2 control-label" style="margin-top: +0.7%">Terra indígena: </label>
+                <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                             ng-model="relatorioestadia.terrasindigena" 
+                             multiple="true" 
+                             ms-selected ="{{terraIndigena.selected.length}}" 
+                             ms-header="Selecione as terras indigenas"
+                             options="terra.nometerra for terra in terras" 
+                             scroll-after-rows="8">
+                </multiselect>
+            </div>
+        </form>                
+    </div>    
+</div>    
+<div class="form-group" style="margin-bottom: 250px;">
+    <div class="col-md-11">
+        <button ng-click="estadiaRel('PDF')" style="margin-right: 20px;" class="btn btn-success col-md-2">Gerar em PDF</button>
+        <button ng-click="estadiaRel('EXCEL')" class="btn btn-success col-md-2">Gerar em EXCEL</button>
+    </div>
+</div>

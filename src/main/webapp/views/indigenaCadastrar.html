@@ -1,0 +1,384 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovoIndio">Cadastrar indígena</div>
+        <div class="panel-title" ng-show="!isNovoIndio">Alterar indígena</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formInd" novalidate class="form-horizontal form-groups-bordered">
+
+            <div class="form-group">    
+                <label for="nome" class="col-md-2 control-label">Nome:</label>
+                <div class="col-md-4"><input type="text" ng-model="indio.nome" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>
+                <label for="estadoCivil" class="col-md-2 control-label">Estado civil:</label>
+                <div class="col-md-3">
+                    <select name="estadoCivil" ng-model="indio.estadoCivil" id="estadoCivil" required="" class="form-control requerido">
+                        <option value="">Selecione o estado civil</option>
+                        <option value="SOLTEIRO">Solteiro(a)</option>
+                        <option value="CASADO">Casado(a)</option>
+                        <option value="DIVORCIADO">Divorciado(a)</option>
+                        <option value="VIUVO">Viúvo(a)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-show="formInd.nome.$dirty && formInd.nome.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formInd.nome.$error.required">Preencha seu nome completo. </span>
+                <span ng-show="formInd.nome.$error.minlength">Nome deve ter mais de 3 caracteres. </span>
+                <span ng-show="formInd.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres. </span>
+            </div>
+
+            <div class="form-group">    
+                <label for="cpf" class="col-md-2 col-sm-1 control-label">CPF:</label>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" cpf-unique class="form-control cpf"></div>
+            </div>
+
+            <div ng-show="formInd.cpf.$dirty && formInd.cpf.$invalid" role="alert" class="alert alert-danger col-md-offset-2 col-md-10">
+                <span ng-show="formInd.cpf.$error.required">Preencha o CPF. </span>
+                <span ng-show="formInd.cpf.$error.uncpf">CPF já cadastrado. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="etnia" class="col-md-2 control-label">Etnia: </label>
+                <div class="col-md-3" ng-init="getEtnias();">
+                    <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido"
+                            ng-options="etnia.idetnia as etnia.descricao for etnia in etnias">
+                        <option value="">Selecione a etnia</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-left: -45%;" onclick="jQuery('#etniaModal').modal('show', {backdrop: 'static'});">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <label for="terraIndigena" class="col-md-2 control-label">Terra indígena: </label>
+                <div class="col-md-3" style="margin-top: -0.8%; margin-left: -3%; max-width: 500px;" ng-init="getTerras();">
+                    <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                                 ng-model="indio.terraIndigena" 
+                                 ms-selected ="{{terraIndigena.selected.length}}" 
+                                 ms-header="Selecione a terra indigena"
+                                 options="terra.nometerra for terra in terras" 
+                                 scroll-after-rows="4">
+                    </multiselect>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-left: 65%;" onclick="jQuery('#terraModal').modal('show', {backdrop: 'static'});">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div ng-show="formInd.etnia.$dirty && formInd.etnia.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert" >
+                <span ng-show="formInd.etnia.$error.required">Selecione uma etnia. </span>
+            </div>
+            <div ng-show="formInd.terraindigena.$dirty && formInd.terraindigena.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert" >
+                <span ng-show="formInd.terraindigena.$error.required">Selecione uma terra indígena. </span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Gênero:</label>
+                <div class="col-md-3">
+                    <label for="masc">Masculino </label>
+                    <input type="radio" id="masc" name="genero" ng-model="indio.genero" value="MASCULINO" required=""> &nbsp;
+                    <i class='fa fa-male'></i><i class='fa fa-female'></i>
+                    &nbsp;<input type="radio" id="fem" name="genero" ng-model="indio.genero" value="FEMININO" required=""> 
+                    <label for="fem"> Feminino</label>
+                </div>
+                <label for="nome" class="col-md-2 col-sm-1 control-label">Código SUS:</label>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control" maxlength="16"></div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="dataNascimento" class="col-md-2 control-label">Data de nascimento: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="date" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control requerido" required="">
+                    </div>
+                </div>
+                <label for="escolaridade" class="col-md-2 control-label">Escolaridade: </label>
+                <div class="col-md-3">
+                    <select name="escolaridade" ng-model="indio.escolaridade" id="escolaridade" required="" class="form-control requerido">
+                        <option value="">Selecione a escolaridade</option>
+                        <option value="NENHUM">Nenhum</option>
+                        <option value="FUNDAMENTALINCOMPLETO">Fundamental incompleto</option>
+                        <option value="FUNDAMENTALCOMPLETO">Fundamental completo</option>
+                        <option value="MEDIOINCOMPLETO">Médio incompleto</option>
+                        <option value="MEDIOCOMPLETO">Médio completo</option>
+                        <option value="SUPERIORINCOMPLETO">Superior incompleto</option>
+                        <option value="SUPERIORCOMPLETO">Superior completo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
+                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" min="10" name="telefone" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
+            </div>
+
+            <div ng-show="formInd.telefone.$dirty && formInd.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formInd.telefone.$error.required">Preencha o telefone principal. </span>
+            </div>
+
+            <div class="form-group" ng-init="getConvenios()">
+                <label for="nome" class="col-md-2 control-label" style="margin-top: +0.7%">Convênios:</label>
+                <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                             ng-model="indio.conveniosselecionados" 
+                             multiple="true" 
+                             ms-selected ="{{convenios.selected.length}}" 
+                             ms-header="Selecione os convênios"
+                             options="convenio.descricao for convenio in convenios" 
+                             scroll-after-rows="4">
+                </multiselect>
+
+                <div class="col-md-4">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-top: +3%;" onclick="jQuery('#convenioModal').modal('show', {backdrop: 'static'});">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Foto: </label>
+                <div class="col-md-3"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
+                <!--<div id="arquivoFoto" name="arquivoFoto" ng-model="indio.arquivoOk" ng-show="indio.arquivoFoto">Arquivo selecionado: <strong>{{indio.arquivoFoto}}</strong></div>-->
+                <div class="col-md-5"><img src="{{indio.imgSrc}}" class="img-circle" style="width: 40px;"></div>
+                <div class="modal fade" id="fotoModal" data-backdrop="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4 class="modal-title">Tire a foto</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="ng-camera" ng-controller="CameraController as vm">
+                                        <div>    
+                                            <ng-camera
+                                                output-height="360"
+                                                output-width="480"
+                                                viewer-height="360"
+                                                viewer-width="480"
+                                                image-format="jpeg"
+                                                jpeg-quality="100"
+                                                action-message="Tirar foto"
+                                                snapshot="vm.picture"
+                                                flash-fallback-url="img/webcam.swf"
+                                                overlay-url="img/overlay.png"
+                                                shutter-url="sound/shutter.mp3"
+                                                ></ng-camera>
+                                        </div>
+                                        <div ng-model="canvasFoto">
+                                            <img ng-if="vm.picture" ng-src="{{vm.picture}}" id="imgCanvas" alt="Foto">
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="col-md-12" ng-controller="CameraController as vm">
+                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" onclick="fechaModal('fotoModal')" >Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="panel panel-info" ng-show="!isNovoIndio">
+    <div class="panel-heading"> 
+        <div class="panel-title">Ocorrências</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="panel panel-default" >
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <a ng-click="trocaOrdem('ocorrenciaId', busca.ocorrenciaId)">Ocorrência</a>
+                        </th>
+                        <th>
+                            <a ng-click="trocaOrdem('dataOcorrencia', busca.dataOcorrencia)">Data</a>
+                        </th>
+                        <th>
+                            <a ng-click="trocaOrdem('descricao', busca.descricao)">Descrição</a>
+                        </th>
+                        <th>
+                            <a ng-click="trocaOrdem('dataBloqueio', busca.dataBloqueio)">Bloqueio até</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="getOcorrencias()">
+                    <tr ng-repeat='o in ocorrencias'>
+                        <td>{{o.idocorrencia}}</td>
+                        <td>{{o.dataocorrencia}}</td>
+                        <td>{{o.descricao}}</td>
+                        <td>{{o.databloqueio}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" ng-click="confirmaExclusao('ocorrencia', 'ocorrência', o.descricao, o.idocorrencia)" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-remove"> </i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <button ng-show="true" ng-click="carregarOcorrencia()" onclick="jQuery('#ocorrenciaModal').modal('show', {backdrop: 'static'});" ng-disabled="false" class="btn btn-success">Nova Ocorrência</button>
+        </div>
+        
+        <div ng-include="'views/confirmaExclusao.html'"></div>
+        
+    </div>
+</div>
+<div class="modal fade" id="ocorrenciaModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Ocorrência</h4>
+            </div>
+            <div class="modal-body" >
+                <form name="formOcorrencia" novalidate ng-init="carregarOcorrencia()" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="dataOcorrencia" class="col-md-4 control-label">Data da Ocorrência: </label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="date" ng-model="ocorrencia.dataOcorrencia" id="dataOcorrencia" name="dataOcorrencia" class="form-control requerido" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataBloqueio" class="col-md-4 control-label">Bloqueado até: </label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="date" ng-model="ocorrencia.dataBloqueio" id="dataBloqueio" name="dataBloqueio" class="form-control" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao" class="col-md-4 control-label">Motivo: </label>
+                        <!--<div class="col-md-4"><input type="text" ng-model="" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>-->
+                        <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control requerido" ></textarea></div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-11">
+                        <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" onclick="fechaModal('ocorrenciaModal')" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="carregarOcorrencia()" onclick="fechaModal('ocorrenciaModal')" class="btn btn-info">Cancelar</button>
+                    </div>
+                    <div class="row">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="etniaModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Etnia</h4>
+            </div>
+            <div class="modal-body" ng-controller="EtniaController">
+                <form name="formEtnia" novalidate class="form-horizontal">
+                    <div class="form-group">    
+                        <label for="nome" class="col-md-1 control-label">Nome:</label>
+                        <div class="col-md-11"><input type="text" ng-model="etnia.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-11">
+                        <button ng-click="salvarEtnia('modal')" ng-disabled="!formEtnia.$valid" onclick="fechaModal('etniaModal')" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="novaEtnia()" onclick="fechaModal('etniaModal')" class="btn btn-info">Cancelar</button>
+                    </div>
+                    <div class="row">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="terraModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Terra Indigena</h4>
+            </div>
+            <div class="modal-body" ng-controller="TerraController">
+                <form name="formTerra" novalidate class="form-horizontal">
+
+                    <div class="form-group">    
+                        <label for="nome" class="col-md-1 col-sm-2 control-label">Nome:</label>
+                        <div class="col-sm-11"><input type="text" ng-model="terra.nometerra" id="nomeTerra" name="nomeTerra" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+                    </div>
+
+                    <div class="form-group" ng-init="todasCidades()">    
+                        <label for="nome" class="col-md-1 col-sm-2 control-label">Cidade:</label>
+
+                        <multiselect id="cidade" name="cidade" class="input-lg" 
+                                     ng-model="terra.cidade" 
+                                     ms-header="Selecione a cidade"
+                                     options='c.codigoibge as (c.descricao + " - " + c.sigla) for c in cidades' 
+                                     scroll-after-rows="8"
+                                     >
+                        </multiselect>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <button ng-click="salvarTerra('modal')" ng-disabled="!formTerra.$valid" onclick="fechaModal('terraModal')" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novaTerra()" onclick="fechaModal('terraModal')" class="btn btn-info">Cancelar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="convenioModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Convênio</h4>
+            </div>
+            <div class="modal-body" ng-controller="ConvenioController">
+                <form name="formConvenio" novalidate="" class="form-horizontal">
+                    <div class="form-group">    
+                        <label for="nome" class="col-md-1 control-label">Nome:</label>
+                        <div class="col-md-11"><input type="text" ng-model="convenio.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <button ng-click="salvarConvenio('modal')" ng-disabled="!formConvenio.$valid" onclick="fechaModal('convenioModal')" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novoConvenio()" onclick="fechaModal('convenioModal')" class="btn btn-info">Cancelar</button>
+                        </div>
+                    </div>
+                </form>      
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <button ng-show="isNovoIndio" ng-click="salvarIndio()" ng-disabled="!formInd.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-hide="isNovoIndio" ng-click="salvarIndio()" ng-disabled="!formInd.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovoIndio" ng-click="reset(formInd)" class="btn btn-info">Limpar</button>
+    <span ng-show="!formInd.$valid"><img src="../img/requerido.png" alt=""/> Há campos obrigatórios ainda não preenchidos corretamente.</span>
+
+</div>
+
+<script src="js/webcam.js" type="text/javascript"></script>
+<script src="js/ng-camera.js" type="text/javascript"></script>
+
+<div ng-init="carregaScript('bootstrap/neon/js/bootstrap-datepicker'); carregarIndio();">
+</div>
+
+<!--carregaScript('js/datepicker-custom');-->

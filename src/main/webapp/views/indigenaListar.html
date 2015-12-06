@@ -1,0 +1,123 @@
+<div class="panel panel-info" id="indigenaListar">
+    <div class="panel-heading"> 
+        <div class="panel-title">Indígenas cadastrados</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"> </ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'codigoassindi'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'codigoassindi', busca.descricao, 'ok', true)">COD Assindi</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome', busca.descricao, 'ok', true)">Nome</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'datanascimento'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datanascimento', busca.descricao, 'ok', true)">Idade</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'descricao'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao', busca.descricao, 'ok', true)">Etnia e terra indígena</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone', busca.descricao, 'ok', true)">Telefone</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', '')">
+                    <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)"><span class="badge badge-{{corStatus[i.bloqueio]}}">&nbsp;</span>&nbsp;&nbsp;{{i.codigoassindi}}</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)"><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  
+                            {{i.nome}}
+                        </td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{calculaIdade(i.datanascimento)}} anos</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.descricao}} <br> {{i.nometerra}}</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.telefone}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarIndio(i)">Editar</a></li>
+                                    <li><a ng-click="getIdIndigena(i)" onclick="jQuery('#ocorrenciaModal').modal('show', {backdrop: 'static'});">Ocorrência</a></li>
+                                    <!--                                    <li><a ng-click="excluirIndio(i)">Editar</a></li>-->
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="modal fade custom-width" id="modalIndigena" data-backdrop="true" ng-include="'views/fichaIndigena.html'"></div>
+
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
+
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+        
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <span class="badge badge-success">&nbsp;</span> &nbsp Indigena liberado &nbsp&nbsp&nbsp
+                <span class="badge badge-danger">&nbsp;</span> &nbsp Indigena bloqueado &nbsp&nbsp&nbsp
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="modal fade " id="ocorrenciaModal" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cadastrar Ocorrência</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="formOcorrencia" novalidate ng-init="carregarOcorrencia()" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="dataOcorrencia" class="col-md-4 control-label">Data da Ocorrência: *</label>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input type="date" ng-model="ocorrencia.dataOcorrencia" id="dataOcorrencia" name="dataOcorrencia" class="form-control requerido" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataBloqueio" class="col-md-4 control-label">Bloqueado até: </label>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input type="date" ng-model="ocorrencia.dataBloqueio" id="dataBloqueio" name="dataBloqueio" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao" class="col-md-4 control-label">Motivo: </label>
+                            <!--<div class="col-md-4"><input type="text" ng-model="" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>-->
+                            <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control requerido" ></textarea></div>
+                        </div>
+                        <div class="col-md-offset-1 col-md-11">
+                            <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="carregarOcorrencia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                        </div>
+                        <div class="row">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a ng-href="#/Indigena/novo" class="btn btn-success">Cadastrar novo</a>
+</div>

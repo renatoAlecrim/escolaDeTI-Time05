@@ -1,0 +1,17 @@
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(1,'Reserva Indígena Ocoí',4125704);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(2,'Reserva Indígena Rio das Cobras',4117057);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(3,'Reserva Indígena Mangueirinha',4105409);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(4,'Reserva Indígena Palmas',4117602);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(5,'Reserva Indígena Marrecas',4109401);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(6,'Reserva Indígena Ivaí',4114500);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(7,'Reserva Indígena Faxinal',4104402);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(8,'Reserva Indígena Rio d'areia',4110201);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(9,'Reserva Indígena Queimadas',4117305);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(10,'Reserva Indígena Apucaraninha',4113700);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(11,'Reserva Indígena Barão de Antonina',4124707);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(12,'Reserva Indígena São Jerônimo da Serra',4124707);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(13,'Reserva Indígena Laranjinha',4123105);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(14,'Reserva Indígena Pinhalzinho',4127809);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(15,'Reserva Indígena Ilha da Cotinga',4118204);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(16,'Reserva Indígena Mococa',4117305);
+INSERT INTO public.terraindigena(idterraindigena,nometerra,cidade_codigoibge)VALUES(17,'Reserva Indígena Tekoha-Añetetê',4107108);

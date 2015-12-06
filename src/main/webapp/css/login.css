@@ -1,0 +1,36 @@
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.cemporcento {
+    width: 100%;
+}
+
+body {
+    background-color: #333;
+}
+
+.bg_video{
+	position: fixed; 
+	right: 0; 
+	top: 0px;
+	min-width: 100%; 
+	min-height: 100%;
+	width: auto; 
+	height: auto; 
+	z-index: -1000;
+	background-color: #373e4a;
+	background-size: cover; 
+}
+
+.login-header {
+    background-color: transparent !important;
+}
+
+.login-page .login-form .form-group .input-group {
+    padding-right: 6px;
+}

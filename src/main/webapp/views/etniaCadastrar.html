@@ -1,0 +1,31 @@
+<div ng-init="carregarEtnia()" class="panel panel-info">
+
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovaEtnia">Cadastrar nova etnia</div>
+        <div class="panel-title" ng-show="!isNovaEtnia">Alterar etnia</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formEtnia" novalidate class="form-horizontal">
+
+            <div class="form-group">    
+                <label for="nome" class="col-md-1 control-label">Nome:</label>
+                <div class="col-md-11"><input type="text" ng-model="etnia.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
+            </div>
+
+            <div ng-show="formEtnia.descricao.$dirty && formEtnia.descricao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
+                <span ng-show="formEtnia.descricao.$error.required">Preencha o nome da etnia. </span>
+                <span ng-show="formEtnia.descricao.$error.minlength">Etnia deve ter mais de 3 caracteres. </span>
+                <span ng-show="formEtnia.descricao.$error.maxlength">Etnia não pode ter mais de 30 caracteres. </span>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<div class="form-group">
+    <button ng-show="isNovaEtnia" ng-click="salvarEtnia('cad')" ng-disabled="!formEtnia.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+    <button ng-show="!isNovaEtnia" ng-click="salvarEtnia('cad')" ng-disabled="!formEtnia.$valid" class="btn btn-success col-md-2">Alterar</button>
+</div>

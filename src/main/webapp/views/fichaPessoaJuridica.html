@@ -1,0 +1,64 @@
+<div class="modal-dialog" id="modalJuridica" style="width: 96%">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn btn-danger closeModal" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <button type="button" class="btn btn-info closeModal" style="margin-right: 2%;" data-dismiss="modal" ng-click="print('modalJuridica');"><i class="glyphicon glyphicon-print"></i></button>
+            <h4 class="modal-title">Informações de {{juridica.nome}}</h4>
+        </div>
+
+        <div class="modal-body container">
+
+                <div id="fotoPessoa" class="col-md-3 col-xs-12 cantosArredondados" style="margin-bottom: 10px;">
+                    <img src="fotos/empresa.png" id="fotoModal" style="width:100%;" />
+                </div>
+                
+                <div id="dadosBasicosPessoa" class="col-md-9 col-xs-12">
+                    <div class="btn btn-info col-md-12 col-xs-12">Pessoa jurídica</div>
+                    <div class="col-md-9 col-xs-12">
+                        <fieldset>
+                            <legend>Nome:</legend>
+                            <p>{{juridica.nome}}</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-3 col-xs-4">
+                        <fieldset>
+                            <legend>CNPJ:</legend>
+                            <p>{{juridica.cnpj.cnpj}}</p>
+                        </fieldset>
+                    </div>
+                    
+                    <div class="col-md-6 col-xs-6">
+                        <fieldset>
+                            <legend>E-mail:</legend>
+                            <p>{{juridica.email}}</p>
+                        </fieldset>
+                    </div>
+                    
+                    <div class="col-md-6 col-xs-6">
+                        <fieldset>
+                            <legend>Telefones:</legend>
+                            <p>{{juridica.telefones}}</p>
+                        </fieldset>
+                    </div>
+                    
+                    <div class="col-md-12 col-xs-12">
+                        <fieldset>
+                            <legend>Localização:</legend>
+                            <p>{{juridica.cidade}} - CEP {{juridica.cep}}<br>
+                                Logradouro: {{juridica.logradouro}}, {{juridica.numero}} - {{juridica.bairro}}<br>
+                                {{juridica.complemento}}
+                            </p>
+                        </fieldset>
+                    </div>
+                    
+                    
+                    
+
+                </div>
+            <div class="col-md-12 col-xs-12"></div>
+                    
+
+        </div>
+
+    </div>
+</div>

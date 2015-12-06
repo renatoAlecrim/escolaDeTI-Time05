@@ -1,0 +1,38 @@
+<div ng-init="carregar()" class="panel panel-info">
+
+    <div class="panel-heading">
+        <h1 class="panel-title" ng-show="isNovo">Cadastrar Perfil</h1>
+        <h1 class="panel-title" ng-show="!isNovo">Alterar Perfil</h1>
+    </div>
+    <div class="panel-body">
+        <form name="formPerfil" novalidate class="form-horizontal">
+            <div class="form-group">    
+                <label for="nome" class="col-md-2 control-label">Nome Perfil:</label>
+                <div class="col-md-10"><input type="text" ng-model="perfil.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+            </div>
+            <div ng-show="formPerfil.nome.$dirty && formPerfil.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
+                <span ng-show="formPerfil.nome.$error.required">Preencha com o nome do Perfil.</span>
+                <span ng-show="formPerfil.nome.$error.minlength">Nome deve ter mais de 3 caracteres.</span>
+                <span ng-show="formPerfil.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres.</span>
+            </div>
+
+            <div class="form-group" ng-init="itensAcesso()">
+                <label for="nome" class="col-md-2 control-label">Adicionar Itens:</label>
+                <multiselect class="input-lg" 
+                             ng-model="perfil.itensselecionados" 
+                             multiple="true" 
+                             ms-selected ="{{itens.selected.length}}" 
+                             ms-header="Selecione os Itens"
+                             options="item.nome for item in itens" 
+                             scroll-after-rows="8">
+                </multiselect>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div class="form-group">
+    <button ng-show="isNovo" ng-click="salvar('cad')" ng-disabled="!formPerfil.$valid" class="btn btn-success"> Cadastrar</button>
+    <button ng-hide="isNovo" ng-click="salvar('cad')" ng-disabled="!formPerfil.$valid" class="btn btn-success"> Alterar</button>
+    <button ng-show="isNovo" ng-click="carregar()" class="btn btn-info">Limpar</button>
+</div>

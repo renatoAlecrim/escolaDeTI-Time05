@@ -1,0 +1,145 @@
+<div ng-init="carregarVisita();" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovaVisita">Cadastrar Visita</div>
+        <div class="panel-title" ng-show="!isNovaVisita">Alterar visita</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formVisita" novalidate class="form-horizontal form-groups-bordered">
+
+            <div class="form-group" ng-init="listarJuridicas()">
+                <label for="entidade" class="col-md-2 control-label" style="margin-top: 0.7%">Entidade: </label>
+                <multiselect id="entidade" name="entidade" class="input-lg" 
+                             ng-model="visita.entidade" 
+                             ng-change="pegarFone('juridica')"
+                             ms-selected ="{{juridicas.selected.length}}" 
+                             ms-header="Selecione uma entidade"
+                             options="juridica.nome for juridica in juridicas" 
+                             scroll-after-rows="4">
+                </multiselect>
+                <div class="col-md-4">
+                    <a onclick="jQuery('#cadJuridica').modal('show', {backdrop: 'static'});" class="btn-success btn btn-sm" style="margin-top:3%;">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-group" ng-init="listarFisicas()">
+                <label for="pessoaresponsavel" class="col-md-2 control-label" style="margin-top: 0.7%">Responsável: </label>
+                <multiselect id="pessoaresponsavel" name="pessoaresponsavel" class="input-lg" 
+                             ng-model="visita.pessoaresponsavel" 
+                             ng-change="pegarFone('fisica')"
+                             ms-selected ="{{fisicas.selected.length}}" 
+                             ms-header="* Selecione uma pessoa"
+                             options="fisica.nome for fisica in fisicas" 
+                             scroll-after-rows="4">
+                </multiselect>
+                <div class="col-md-4">
+                    <a onclick="jQuery('#cadFisica').modal('show', {backdrop: 'static'});" class="btn-success btn btn-sm" style="margin-top: 3%;">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="datavisita" class="col-md-2 control-label"> Data da Visita</label>
+                <div class="col-md-3"><input type="date" ng-model="visita.datavisita" id="datavisita" name="datavisita" required="" class="form-control requerido"></div>
+                <label for="horaentrada" class="col-md-2 control-label"> Horário Previsto</label>
+                <div class="col-md-2"><input type="time" ng-model="visita.horavisita" id="horavisita" name="horavisita" required="" class="form-control requerido"></div>
+
+            </div>
+            <div ng-show="formVisita.datavisita.$dirty && formVisita.datavisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formVisita.datavisita.$error.required">Preencha data da visita. </span>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Telefones: </label>
+                <div class="col-md-2">
+                    {{telefoneJuridica}}<br>{{telefoneFisica}}
+                </div>
+                <label for="telefonevisita" class="col-md-2 control-label">Telefone adicional: </label>
+                <div class="col-md-2"><input type="text" ng-model="visita.telefonevisita" id="telefonevisita" name="telefonevisita" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="seriecurso" class="col-md-2 control-label">Série / Curso: </label>
+                <div class="col-md-4"><input type="text" ng-model="visita.seriecurso" id="seriecurso" name="seriecurso" class="form-control"></div>
+            </div>
+
+            <div class="form-group">    
+                <label for="quantidadedevisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
+                <div class="col-md-2">
+                    <input type="number" ng-model="visita.quantidadedevisitantes" id="quantidadedevisitantes" name="quantidadedevisitantes" required="" class="form-control requerido" min="0" max="100">
+                </div>
+            </div>
+            <div ng-show="formVisita.quantidadedevisitantes.$dirty && formVisita.quantidadedevisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formVisita.quantidadedevisitantes.$error.required">Preencha o número de visitantes. </span>
+                <span ng-show="formVisita.quantidadedevisitantes.$error.max">Máximo de 100 visitantes. </span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-info">    
+    <div class="panel-heading"> 
+        <div class="panel-title">Informações da Visita</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formHoraEntradaVisita" novalidate class="form-horizontal form-groups-bordered">
+            <div class="form-group">
+                <label for="horaentrada" class="col-md-2 control-label"> Hora da Entrada:</label>
+                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" class="form-control"></div>
+                <label for="horasaida" class="col-md-2 control-label"> Hora da Saída:</label>
+                <div class="col-md-2"><input ng-disabled="!visita.horaentrada" type="time" ng-model="visita.horasaida" id="horasaida" name="horasaida" class="form-control"></div>
+
+            </div>
+            
+            <div class="form-group">
+                <label class="col-md-2 control-label" style="margin-left: -1%; margin-top: 20px;" for="observacao">Observações: </label>                
+                <textarea name="observacao" style="margin-top: 10px; margin-left: 1.5%; border-radius: 5px;" id="observacao" ng-model="visita.observacao" rows=5 class="col-md-7"></textarea>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <button ng-show="isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formVisita.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-show="!isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formVisita.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovaVisita" ng-click="reset(formVisita)" class="btn btn-info">Limpar</button>
+</div>
+
+
+<div class="modal fade custom-width" id="cadFisica" data-backdrop="true">
+    <div class="modal-dialog" style="width: 96%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger closeModal" onclick="fechaModal('cadFisica');" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h4 class="modal-title">Cadastrar pessoa</h4>
+            </div>
+
+            <div class="modal-body container" ng-include="'views/pessoaFisicaCadastrar.html'" ng-controller="PessoaFisicaController">
+            </div>
+
+        </div>
+    </div>    
+</div>
+
+<div class="modal fade custom-width" id="cadJuridica" data-backdrop="true">
+    <div class="modal-dialog" style="width: 96%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger closeModal" onclick="fechaModal('cadJuridica');" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h4 class="modal-title">Cadastrar instituição</h4>
+            </div>
+
+            <div class="modal-body container" ng-include="'views/pessoaJuridicaCadastrar.html'" ng-controller="PessoaJuridicaController">
+            </div>
+
+        </div>
+    </div>    
+</div>

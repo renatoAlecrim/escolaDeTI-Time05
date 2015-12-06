@@ -1,0 +1,200 @@
+*{margin:0;padding:0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box}
+
+.calendar,.calendar * {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+.calendar {padding: 0em; color: white; font-weight: 300; border-bottom: 1px solid #303641;}
+.calendar.small {font-size: 0.8em; font-weight: 100;}
+
+.calendar-month-view {display: block; font-size: 2.5em; line-height:2em; -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition:0.5s all; position:relative; text-align:center;}
+.calendar-month-view p { font-size: 0.8em; }
+.calendar-month-view, .calendar-month-view * {-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;}
+.calendar-month-view-arrow {width: 15%;	position: absolute; top: 0; cursor: pointer;}
+/*.calendar-month-view-arrow:hover {background: rgba(255, 255, 255, 0.75);}*/
+.calendar.spec-day .calendar-month-view-arrow {	display: none;}
+
+[data-dir=left] {left:0;}
+[data-dir=right] {right: 0;}
+
+
+.letrasDay {display: block; height:30px; line-height:30px; text-align:center; background-color: #2c7ea1;}
+.letrasDay div {width: 14.28%;margin: 0 !important; padding:0 !important; position: relative; display: block; float:left;color: white; border:solid rgba(255,255,255, 0.2); border-width:1px 0 0 1px; overflow:hidden; font-size: 0.5em;}
+
+.calendar:hover .calendar-month-view-arrow {color: #FFF;}
+.calendar:hover .calendar-month-view-arrow:hover {color: #2c7ea1;}
+.calendar-holder {width:100%; height: 300px; position: relative; overflow: hidden;}
+.calendar-grid {width:100%; height: 100%; position: absolute;top: 0; background-color: rgba(255,255,255, 0.4);}
+.calendar.spec-day .calendar-grid {display: none;}
+
+.calendar-day {width: 14.28%; margin: 0 !important; padding:0 !important; height: 50px; position: relative; display: block;float:left; color:#0f0f0f; border:solid #c0c0c0; border-width:1px 0 0 1px; overflow:hidden}
+/*.calendar-day.have-events {cursor: pointer;}*/
+
+/*.calendar-day:nth-child(7n),.letrasDay div:nth-child(7n) {border-right: 0px;}*/
+/*.calendar-day:nth-child(7n+1),.letrasDay div:nth-child(7n+1) {border-left: 0;}*/
+.calendar-day:nth-child(7n) {border-right:solid 1px #c0c0c0;}
+.calendar-day.other-month {color: #c0c0c0;}
+.calendar .calendar-grid .calendar-day.this-day .date-holder { font-size: 2.2em; color: #2c7ea1; }
+.calendar .calendar-grid .calendar-day.fds { background-color: rgba(0,0,0, 0.05); }
+.calendar .calendar-grid .calendar-day:hover {background-color: rgba(0,0,0, 0.1); cursor: pointer;}
+.calendar .calendar-grid .calendar-day.have-events:hover {background-color: #303641; color: #FFFFFF}
+.calendar .calendar-grid .other-month.have-events:hover {color: white;}
+
+.calendar-day .date-holder {font-size: 1.3em; position: absolute; right:5%; bottom:5%;}
+.calendar-day .event-notif-holder {
+	height: 90%;
+	height: -moz-calc(100% - 10px);
+	height: -webkit-calc(100% - 10px);
+	height: calc(100% - 10px);
+	left:5%;
+	left: -moz-calc(0px + 5px);
+	left: -webkit-calc(0px + 5px);
+	left: calc(0px + 5px);
+	top:5%;
+	top: -moz-calc(0px + 5px);
+	top: -webkit-calc(0px + 5px);
+	top: calc(0px + 5px);
+	position: absolute;
+	width: 0.5em;
+}
+.calendar-day .event-notif {
+	height: 0.5em;
+	background-color: #2c7ea1;
+	width: 250%;
+	margin: 1px 0px;
+        border-radius: 50px;
+}
+
+.calendar-day .event-aniver {
+	height: 0.5em;
+	background-color: #00FF7F;
+	width: 250%;
+	margin: 1px 0px;
+        border-radius: 50px;
+}
+
+.calendar-day .event-visita {
+	height: 0.5em;
+	background-color: #FFD700;
+	width: 250%;
+	margin: 1px 0px;
+        border-radius: 50px;
+}
+
+.border-event-notif {
+    border-left: 5px solid #2c7ea1;
+}
+
+.border-event-visita {
+    border-left: 5px solid #FFD700;
+}
+
+.border-event-aniver {
+    border-left: 5px solid #00FF7F;
+}
+
+.calendar-specific {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	color: #303641;
+	padding: 1em;
+        background-color: rgba(255,255,255, 0.4);
+}
+.calendar.spec-day .calendar-specific {
+	display: block;
+}
+.calendar-specific .specific-day {
+	width: 25%;
+	display: inline-block;
+	padding-bottom: 1em;
+	cursor: pointer;
+        overflow-y: auto;
+}
+.calendar-specific .specific-day:hover {
+	background-color: #303641;
+        color: #FFF;
+}
+
+.specific-day-info[i=day] {
+	font-size: 3.0em;
+	text-align: center;
+}
+
+.specific-day-info[i=day] span {
+	font-size: 0.7em;
+}
+
+.specific-day-info[i=month] {
+	font-size: 2em;
+	line-height: 0.5em;
+	text-align: center;
+}
+.calendar-specific .specific-day-scheme {
+	display: inline-block;
+	height: 100%;
+	margin-left: 1em;
+	width: calc(70% - 1em);
+	width: -webkit-calc(70% - 1em);
+	overflow-y: scroll;
+	text-align: left;
+        border-left: 5px solid #303641;
+        padding-left: 5px;
+}
+.calendar-specific .specific-day-scheme::-webkit-scrollbar {
+	width: 10px;
+}
+.calendar-specific .specific-day-scheme::-webkit-scrollbar-track {
+	background: transparent;
+}
+.calendar-specific .specific-day-scheme::-webkit-scrollbar-thumb {
+	background: #303641;
+}
+
+.specific-day-scheme .specific-day-scheme-event {
+	padding-left: 0.5em;
+	margin-bottom: 0.5em;
+}
+.specific-day-scheme .specific-day-scheme-event:first-child {
+	//margin: 0;
+}
+.specific-day-scheme .specific-day-scheme-event:last-child {
+	//margin-bottom: 30em;
+}
+
+.calendar .specific-day-scheme-event h1 {
+	margin: 0;
+	font-size: 1.1em;
+	line-height: 1;
+	font-weight: 400;
+}
+
+.calendar .specific-day-scheme-event p {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin:0;
+    padding: 0;
+}
+
+.calendar .specific-day-scheme-event p[data-role=dur] {
+    margin: 0;
+    font-size: 1.0em;
+    font-weight: normal;
+}
+.calendar .specific-day-scheme-event p[data-role=loc] {
+	margin: 0;
+	line-height: 1;
+}
+[data-color=normal] {
+    /*background-color: #6AB0AC;*/
+    background-color: #2c7ea1;
+}
+[data-color=normal] select,[data-color=normal] .calendar-month-view, [data-role=sub] nav a[data-color=normal], [data-color=normal] .checkbox-outer, [data-color=normal] .radio-outer,[data-color=normal] textarea,input:not([type=file])[data-color=normal], [data-color=normal] input:not([type=file]),[data-color=normal] .calendar-day,[data-color=normal] button, button[data-color=normal],[data-color=normal] a[data-role=button], a[data-role=button][data-color=normal],[data-color=normal] input[type=submit],[data-color=normal].accordion li, [data-color=normal].list li, [data-color=normal].olist li, [data-color=normal] .specific-day,[data-color=normal] .chart-bar,[data-color=normal] .calendar-specific .specific-day-scheme-event {
+    background-color: #fff;
+} 
+
+.calendar .calendar-month-view { 
+    background: #303641;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}

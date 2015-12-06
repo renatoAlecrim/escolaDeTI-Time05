@@ -1,0 +1,85 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Lista de Visitas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"> </ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomepj'"></i> 
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomepj', busca.descricao, 'ok', true)">Nome</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'datavisita'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datavisita', busca.descricao, 'ok', true)">Data da visita</a>
+                        </th>   
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'horaentrada'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'horaentrada', busca.descricao, 'ok', true)">Horário</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'quantidadedevisitantes'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidadedevisitantes', busca.descricao, 'ok', true)">Visitantes</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomepf'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomepf', busca.descricao, 'ok', true)">Responsável</a>
+                        </th>
+
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', '')">
+                    <tr ng-repeat='v in dadosRecebidos.itens.listaDeRegistros' >
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">
+                            <span class="badge badge-{{statusVisita(v.datavisita, v.visitarealizada)}}">&nbsp;</span> &nbsp;
+                            {{v.nomepf}}
+                        </td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{dateToData(v.datavisita)}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{v.quantidadedevisitantes}} pessoas</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{v.nomepf}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" style="margin-left: -500%;">
+                                    <li><a ng-click="abrirModal(v.idvisita)">Registrar Entrada/Saída</a></li>
+                                    <li><a ng-click="editarVisita(v)">Editar</a></li>
+                                    <li><a ng-click="confirmaExclusao('visita', 'visita', dateToData(v.datavisita) + ' de ' + v.nomepf, v.idvisita)">Excluir</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>            
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+        
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <span class="badge badge-success">&nbsp;</span> &nbsp Visita realizada &nbsp&nbsp&nbsp
+                <span class="badge badge-warning">&nbsp;</span> &nbsp Visita a ser realizada &nbsp&nbsp&nbsp
+                <span class="badge badge-danger">&nbsp;</span> &nbsp Visita não realizada &nbsp&nbsp&nbsp
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div>
+    <a ng-href="#/Visita/nova" class="btn btn-success">Cadastrar nova</a>        
+</div>
+
+<div class="modal fade custom-width" id="modalVisita" data-backdrop="true" ng-include="'views/fichaVisita.html'"></div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

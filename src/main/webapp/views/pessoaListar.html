@@ -1,0 +1,85 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Pessoas cadastradas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"> </ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome', busca.descricao, 'ok', true)">Nome</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'email'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'email', busca.descricao, 'ok', true)">E-mail</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'documento'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'documento', busca.descricao, 'ok', true)">CPF/CNPJ</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone', busca.descricao, 'ok', true)">Telefone</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'descricao'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao', busca.descricao, 'ok', true)">Cidade</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'tipo_pessoa'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'tipo_pessoa', busca.descricao, 'ok', true)">Tipo</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', '')">
+                    <tr ng-repeat='p in dadosRecebidos.itens.listaDeRegistros'>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa);
+                                        chamaModalPessoa(p.genero);">
+                            <i class="{{ehMeninoMenina[p.genero].icone}}" style="color: {{ehMeninoMenina[p.genero].cor}};"></i>{{" " + p.nome}}
+                        </td>
+                        <td class="hidden-sm hidden-xs pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa);
+                                        chamaModalPessoa(p.genero);">{{p.email}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa);
+                                        chamaModalPessoa(p.genero);">{{p.documento}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa);
+                                        chamaModalPessoa(p.genero);">{{p.telefone}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa);
+                                        chamaModalPessoa(p.genero);">{{p.descricao + " - " + p.sigla}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa);
+                                        chamaModalPessoa(p.genero);">{{p.tipo_pessoa}}</td>
+
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editar(p.idpessoa, p.genero)">Editar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="modal fade custom-width" id="modalPessoaFisica" data-backdrop="true" ng-include="'views/fichaPessoaFisica.html'"></div>
+            <div class="modal fade custom-width" id="modalPessoaJuridica" data-backdrop="true" ng-include="'views/fichaPessoaJuridica.html'"></div>
+
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+    </div>
+</div>
+<div>
+    <a ng-href="#/Fisica/nova" class="btn btn-info">Cadastrar nova Pessoa Fisica</a>        
+    <a ng-href="#/Juridica/nova" class="btn btn-warning">Cadastrar nova Pessoa Juridica</a>  
+</div>

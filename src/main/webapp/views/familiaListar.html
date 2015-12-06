@@ -1,0 +1,69 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Familias cadastradas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"></ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomefamilia'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomefamilia', busca.descricao, 'ok', true)">Família</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome', busca.descricao, 'ok', true)">Representante</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone', busca.descricao, 'ok', true)">Telefone</a>
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'quantidade'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidade', busca.descricao, 'ok', true)">Membros</a>
+                        </th>
+                        <th>
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal, '', '', '')">
+                    <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
+                        <td>{{f.nomefamilia}}</td>
+                        <td>{{f.nome}} <br> </td>
+                        <td>{{f.telefone}}</td>
+                        <td class="hidden-sm hidden-xs">{{f.quantidade}} membros</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarFamilia(f)">Editar</a></li>
+                                    <li><a ng-click="confirmaExclusao('familia', 'família', f.nomefamilia, f.idfamilia)">Excluir</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="panel-footer">
+                <span> Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}} </span>
+            </div>
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+    </div>
+</div>
+<div>
+    <a ng-href="#/Familia/nova" class="btn btn-success">Cadastrar nova</a>
+</div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

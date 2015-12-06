@@ -1,0 +1,3 @@
+Insert Into Public.Etnia(idetnia,descricao)Values('1','Guarani');
+Insert Into Public.Etnia(idetnia,descricao)Values('2','Kaingang');
+Insert Into Public.Etnia(idetnia,descricao)Values('3','Xetá');

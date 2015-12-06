@@ -1,0 +1,27 @@
+<div ng-init="carregarConvenio()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovoConvenio">Cadastrar novo convênio</div>
+        <div class="panel-title" ng-show="!isNovoConvenio">Alterar Convênio</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formConvenio" novalidate="" class="form-horizontal">
+            <div class="form-group">    
+                <label for="nome" class="col-md-1 control-label">Nome:</label>
+                <div class="col-md-11">
+                    <input type="text" ng-model="convenio.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
+            </div>
+            <div ng-show="formConvenio.descricao.$dirty && formConvenio.descricao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
+                <span ng-show="formConvenio.descricao.$error.required">Preencha o nome do convênio. </span>
+                <span ng-show="formConvenio.descricao.$error.minlength">Convênio deve ter mais de 3 caracteres. </span>
+                <span ng-show="formConvenio.descricao.$error.maxlength">Convênio não pode ter mais de 30 caracteres. </span>
+            </div>
+        </form>                
+    </div>    
+</div>    
+<div>
+    <button ng-show="isNovoConvenio" ng-click="salvarConvenio('cad')" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+    <button ng-show="!isNovoConvenio" ng-click="salvarConvenio('cad')" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Alterar</button>
+</div>

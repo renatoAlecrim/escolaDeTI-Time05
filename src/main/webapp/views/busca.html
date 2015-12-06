@@ -1,0 +1,23 @@
+<form name="buscaAlgo" novalidate class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-9 col-sm-12">
+            <input type="text" ng-model="busca.descricao" placeholder="{{placeHolder}}" class="form-control" ng-keyup="fazPesquisa(busca.numregistros, busca.descricao);">
+        </div>
+        
+        <div class="col-md-3 com-sm-12">
+            <select ng-model="busca.numregistros" class="form-control" ng-change="fazPesquisa(busca.numregistros, busca.descricao);">
+                <option value="">Registros por página</option>
+                <option value="5">05 registros</option>
+                <option value="10">10 registros</option>
+                <option value="25">25 registros</option>
+                <option value="50">50 registros</option>
+                <option value="100">100 registros</option>
+            </select>
+        </div>
+<!--        <div class="col-md-1">
+            <button ng-click="fazPesquisa(busca.numregistros, busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+        </div>-->
+    </div>
+</form>
+   
+<br>

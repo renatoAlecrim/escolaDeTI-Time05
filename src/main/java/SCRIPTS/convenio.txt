@@ -1,0 +1,8 @@
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(1,'Bolsa Família');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(2,'Bolsa Escola');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(3,'Bolsa Alimentação');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(4,'Vale Gás');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(5,'Minha Casa Minha Vida');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(6,'Prouni');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(7,'Sisutec');
+INSERT INTO public.convenio(idconvenio,descricao)VALUES(8,'Fies');

@@ -1,0 +1,23 @@
+﻿{
+    "nome": "BRUNO",
+    "cpf": {
+        "cpf": "07042278844"
+    },
+    "etnia": 1,
+    "genero": "MASCULINO",
+    "dataNascimento": "2015-11-11",
+    "convenio": [
+        {   
+            "idconvenio": 6, 
+            "descricao": "VALE GÁS"
+        }
+    ],
+    "telefone": {
+        "telefone": "3323-1768"
+    },
+    "terraIndigena": 30,
+    "escolaridade": "SUPERIORINCOMPLETO",
+    "estadoCivil": "CASADO",
+    "codigoSUS": 102,
+    "imgSrc": ""
+}

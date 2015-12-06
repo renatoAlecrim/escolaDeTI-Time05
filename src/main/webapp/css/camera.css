@@ -1,0 +1,13 @@
+.ng-camera-stack {
+    position: relative;
+}
+.ng-camera-overlay {
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+
+.ng-camera-action {
+    margin-top: 10px;
+}

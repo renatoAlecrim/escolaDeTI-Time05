@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html ng-app="appAssindi">
+    <head>
+        <title>ASSINDI</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="img/favicon.png" rel="shortcut icon" type="image/x-icon" />
+
+        <script src="jsBase/angular.min.js"></script>
+        <script src="jsBase/angular-route.min.js"></script>
+        <script src="bootstrap/neon/js/jquery-1.11.0.min.js"></script>
+        <script src="js/multiselect-tpls.js" type="text/javascript"></script>
+        <script src="js/appAssindi.js"></script>
+        <script src="js/servicesAssindi.js"></script>
+        <script src="js/LoginController.js"></script>
+        <script src="js/UsuarioController.js"></script>
+        <script src="js/PessoaFisicaController.js"></script>
+        <script src="js/PessoaJuridicaController.js"></script>
+        <script src="js/directivesAssindi.js"></script>
+        <link rel="stylesheet" href="bootstrap/neon/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+        <script src="js/rzslider.min.js"></script>
+
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/usuario.css" rel="stylesheet" type="text/css"/>
+        <link href="css/index.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap/css/font-icons/entypo/css/entypo.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap/neon/css/font-icons/entypo/css/entypo.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap/neon/css/font-icons/entypo/css/entypo.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap/neon/css/font-icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+        <link rel="stylesheet" href="bootstrap/neon/css/bootstrap.css">
+        <link rel="stylesheet" href="bootstrap/neon/css/neon-core.css">
+        <link rel="stylesheet" href="bootstrap/neon/css/neon-theme.css">
+        <link rel="stylesheet" href="bootstrap/neon/css/neon-forms.css">
+        <link href="bootstrap/neon/css/custom.css" rel="stylesheet" type="text/css"/>
+
+        <!--<script src="bootstrap/neon/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>-->
+        <script src="bootstrap/neon/js/gsap/main-gsap.js"></script>
+        <script src="bootstrap/neon/js/bootstrap.js"></script>
+        <script src="bootstrap/neon/js/joinable.js"></script>
+        <script src="bootstrap/neon/js/resizeable.js"></script>
+        <script src="bootstrap/neon/js/neon-api.js"></script>
+        <script src="bootstrap/neon/js/jquery.validate.min.js"></script>
+        <script src="bootstrap/neon/js/neon-login.js"></script>
+        <script src="bootstrap/neon/js/neon-custom.js" type="text/javascript"></script>
+        <script src="bootstrap/neon/js/neon-demo.js" type="text/javascript"></script>
+
+        <script src="bootstrap/neon/js/toastr.js" type="text/javascript"></script>
+        <!--<script>$.noConflict();</script>-->
+        <script src="bootstrap/neon/js/jquery-1.11.0.min.js"></script>
+        <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <link href="css/rzslider.min.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="css/angular-ui-tree.min.css" rel="stylesheet" type="text/css"/>-->
+    </head>
+
+    <body class="page-body login-page login-form-fall" ng-controller="LoginController" ng-init="verificaUsers(); verificaTelaLogin();">
+        
+        <div class="alert alert-warning alertInicial" ng-show='!yesUser'>Cadastre um administrador para iniciar a aplicação.</div>
+        
+        <video  autoplay loop class="bg_video">
+            <source src="img/assindi.webm" type="video/webm">
+        </video>	
+        
+        <div class="login-container">
+            <div class="login-header "><!--login-caret-->
+
+                <div class="login-content">
+
+                        <img src="img/assindi.png" alt="" />
+
+                    <!-- progress bar indicator -->
+                    <!--			<div class="login-progressbar-indicator">
+                                                    <h3>43%</h3>
+                                                    <span>entrando...</span>
+                                            </div>-->
+                </div>
+
+            </div>
+
+<!--            <div class="login-progressbar">
+                <div></div>
+            </div>-->
+
+            <div class="login-form" ng-show="yesUser">
+
+                <div class="login-content">
+
+                    <div class="form-login-error">
+                        <h3>Login ou senha inválidos</h3>
+                        <p>Tente novamente ou entre em contato com o administrador.</p>
+                    </div>
+
+                    <form method="post" role="form" id="formLogin" name="formLogin" novalidate="">
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="entypo-user"></i>
+                                </div>
+                                <input type="text" class="form-control" ng-model="login.login" name="login" id="login"  placeholder="Digite seu login..." required="" />
+                            </div>
+
+                        </div>
+                        <div ng-show="formLogin.login.$dirty && formLogin.login.$invalid" class="alert alert-danger" role="alert">
+                            <span ng-show="formLogin.login.$error.required">Preencha seu login. </span>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="entypo-key"></i>
+                                </div>
+
+                                <input type="password" class="form-control" ng-model="login.senha" name="senha" id="senha" placeholder="Digite sua senha..." required=""  />
+                            </div>
+
+                        </div>
+
+                        <div ng-show="formLogin.senha.$dirty && formLogin.senha.$invalid" class="alert alert-danger" role="alert">
+                            <span ng-show="formLogin.senha.$error.required">Preencha sua senha. </span>
+                        </div>
+
+                        <div class="form-group">
+                            <button ng-disabled="!formLogin.$valid" ng-click="logar()" type="submit" class="btn btn-info btn-block btn-login">
+                                <i class="entypo-login"></i>
+                                Entrar
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div style="margin-top: -50px;" class="login-form" ng-show="!yesUser" ng-controller="UsuarioController">
+
+            <div class="login-content formNovoAdmin" ng-init="novoAdmin()">
+
+                <form name="formCad" novalidate class="form-horizontal">
+                    <div class="form-group">    
+                        <label for="nome" class="col-md-2 control-label novoAdmin">Nome:</label>
+                        <div class="col-md-10"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+                    </div>
+                    <div ng-show="formCad.nome.$dirty && formCad.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
+                        <span ng-show="formCad.nome.$error.required">Preencha seu nome completo. </span>
+                        <span ng-show="formCad.nome.$error.minlength">Nome deve ter mais de 3 caracteres. </span>
+                        <span ng-show="formCad.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres. </span>
+                    </div>
+
+                    <div class="form-group"> 
+                        <label for="login" class="col-md-2 control-label novoAdmin">Login:</label>
+                        <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=5 ng-maxlength=20></div>
+                    </div>
+                    <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                        <span ng-show="formCad.login.$error.required">Preencha seu login. </span>
+                        <span ng-show="formCad.login.$error.unlogin">Login já cadastrado. </span>
+                        <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 4 caracteres. </span>
+                        <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres. </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="col-md-2 control-label novoAdmin">E-mail: </label>
+                        <div class="col-md-10"><input type="email" ng-model="usuario.email.email" id="email" name="email" required="" email-unique class="form-control"></div>
+                    </div>
+                    <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                        <span ng-show="formCad.email.$error.required">Preencha seu e-mail. </span>
+                        <span ng-show="formCad.email.$error.email">Coloque um e-mail válido. </span>
+                        <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.   </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="senha" class="col-md-2 control-label novoAdmin">Senha: </label>
+                        <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
+                    </div>      
+                    <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                        <span ng-show="formCad.senha.$error.required">Preencha sua senha. </span>
+                        <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres. </span>
+                        <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
+                        <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="rsenha" class="col-md-2 control-label novoAdmin">Repetir senha: </label>
+                        <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
+                    </div>    
+                    <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                        <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
+                        <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="submit" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

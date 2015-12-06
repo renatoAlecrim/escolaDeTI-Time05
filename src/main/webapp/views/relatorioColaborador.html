@@ -1,0 +1,42 @@
+<div ng-init="novoRelColaborador()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Colaboradores da Assindi</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formConvenio" novalidate="" class="form-horizontal">
+            <div class="form-group">
+                <label for="funcao" class="col-md-2 control-label">Função: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="getFuncoes();">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatoriocolaborador.funcoes" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione as funções"
+                                 options="funcao.descricao for funcao in funcoes" 
+                                 scroll-after-rows="8" required="">
+                    </multiselect>  
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Gênero:</label>
+                <div class="col-md-3">
+                    <label for="masc">Masculino </label>
+                    <input type="checkbox" id="masc" name="genero" ng-model="relatoriocolaborador.generomasc" value="MASCULINO"> &nbsp;
+                    <i class='fa fa-male'></i><i class='fa fa-female'></i>
+                    &nbsp;<input type="checkbox" id="fem" name="genero" ng-model="relatoriocolaborador.generofem" value="FEMININO"> 
+                    <label for="fem"> Feminino</label>
+                </div>
+            </div>
+        </form>                
+    </div>    
+</div>    
+<div class="form-group" style="margin-bottom: 250px;">
+    <div class="col-md-11">
+        <button ng-click="colaboradorRel('PDF')" style="margin-right: 20px;" class="btn btn-success col-md-2">Gerar em PDF</button>
+        <button ng-click="colaboradorRel('EXCEL')" class="btn btn-success col-md-2">Gerar em EXCEL</button>
+    </div>
+</div>
+

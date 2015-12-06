@@ -1,0 +1,66 @@
+<div class="panel panel-info">
+
+    <div class="panel-heading"> 
+        <div class="panel-title" >Cadastrar novo evento</div>
+       
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body" ng-init="carregarEvento()">
+        <form name="formEvento" novalidate class="form-horizontal">
+
+            <div class="form-group">    
+                <label for="descricao" class="col-md-2 control-label">Descrição:</label>
+                <div class="col-md-5 col-sm-10"><input type="text" ng-model="evento.descricao" id="descricaoEvento" name="descricaoEvento" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50 ></div>
+            </div>
+
+            <div ng-show="formEvento.descricaoEvento.$dirty && formEvento.descricaoEvento.$invalid" class="alert alert-danger col-md-offset-1 col-md-11" role="alert">
+                <span ng-show="formEvento.descricaoEvento.$error.required">Preencha a descrição do evento. </span>
+                <span ng-show="formEvento.descricaoEvento.$error.minlength">A descrição do evento deve ter mais de 3 caracteres. </span>
+                <span ng-show="formEvento.descricaoEvento.$error.maxlength">A descrição do evento não pode ter mais de 50 caracteres. </span>
+            </div>
+            
+            <div class="form-group">    
+                <label for="horainicial" class="col-md-2 control-label">Hora de Inicio: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="time" ng-model="evento.horainicial" id="horainicial" name="horainicial" class="form-control requerido" required="">
+                    </div>
+                </div>                      
+                <label for="horafinal" class="col-md-2 control-label">Hora de Término: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="time" ng-model="evento.horafinal" id="horafinal" name="horafinal" class="form-control requerido" required="">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label for="datainicial" class="col-md-2 control-label">Data de Inicio: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="date" ng-model="evento.datainicial" id="datainicial" name="datainicial" class="form-control requerido" required="">
+                    </div>
+                </div>                      
+                <label for="datafinal" class="col-md-2 control-label">Data de Término: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="date" ng-model="evento.datafinal"id="datafinal" name="datafinal" class="form-control requerido" required="">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="visualizarnocalendario" class="col-md-2 control-label">Apresentar no Calendário: </label>
+                <div class="col-md-2">
+                    <select name="visualizarnocalendario" ng-model="evento.visualizarnocalendario" id="visualizarnocalendario" class="form-control">                         
+                        <option value="true" selected>Sim</option>
+                        <option value="false">Não</option>                                               
+                    </select> 
+                </div> 
+            </div>  
+        </form>
+    </div>
+</div>
+<div class="form-group">
+    <button ng-click="salvarEvento()" ng-disabled="!formEvento.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+</div>

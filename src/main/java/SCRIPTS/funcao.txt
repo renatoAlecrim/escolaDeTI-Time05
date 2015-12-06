@@ -1,0 +1,4 @@
+Insert Into Public.Funcao(idfuncao,descricao)Values('1','Nenhuma');
+Insert Into Public.Funcao(idfuncao,descricao)Values('2','Administrativo');
+Insert Into Public.Funcao(idfuncao,descricao)Values('3','Financeiro');
+Insert Into Public.Funcao(idfuncao,descricao)Values('4','Recursos Humanos');

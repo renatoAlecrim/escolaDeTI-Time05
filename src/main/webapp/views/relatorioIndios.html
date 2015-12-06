@@ -1,0 +1,120 @@
+<div ng-init="novoRelIndigena()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" >Indigenas que passaram pela Assindi</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formConvenio" novalidate="" class="form-horizontal">
+            <div class="form-group">    
+                <label for="periodoinicial" class="col-md-2 control-label">Periodo:</label>
+                <div class="col-md-3">
+                    <input type="date" ng-model="relatorioindigena.dataini" id="descricao" name="descricao" class="form-control" ng-minlength=3 ng-maxlength=30>
+                </div>
+                <label for="periodofinal" class="col-md-1 control-label" style="margin-right: 5%">à</label>
+                <div class="col-md-3">
+                    <input type="date" ng-model="relatorioindigena.datafim" id="descricao" name="descricao" class="form-control" ng-minlength=3 ng-maxlength=30>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idade" class="col-md-2 control-label">Idade:</label>
+                <div class="col-md-7">
+                    <rzslider rz-slider-floor="idadeRange.floor" rz-slider-ceil="idadeRange.ceil" rz-slider-model="idadeRange.min" rz-slider-high="idadeRange.max"></rzslider>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="familia" class="col-md-2 control-label" >Familia: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="getFamilias()">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioindigena.familias"
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione as famílias"
+                                 options="familia.nomefamilia for familia in familias" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+                <label for="etnia" class="col-md-2 control-label" style="position: relative; margin-left: -2%;">Etnia: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="getEtnias();">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioindigena.etnias"
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione as etnias"
+                                 options="etnia.descricao for etnia in etnias" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="escolaridade" class="col-md-2 control-label">Escolaridade: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioindigena.escolaridades"
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione as escolaridades"
+                                 options="escolaridade.nome for escolaridade in escolaridades" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="familia" class="col-md-2 control-label">Estado Civil:</label>
+                <div class="col-md-3" style="margin-right: 50px; margin-left: -1.5%;">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatorioindigena.estadoscivis"
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione os estados civis"
+                                 options="estadoCivil.valor as estadoCivil.nome for estadoCivil in estadosCivil" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-1 control-label">Gênero:</label>
+                    <div class="col-md-3">
+                        <label for="masc">Masculino </label>
+                        <input type="checkbox" id="masc" name="genero" ng-model="generomasc" value="MASCULINO"> &nbsp;
+                        <i class='fa fa-male'></i><i class='fa fa-female'></i>
+                        &nbsp;<input type="checkbox" id="fem" name="genero" ng-model="generofem" value="FEMININO"> 
+                        <label for="fem"> Feminino</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-init="getTerras()">
+                <label for="terraIndigena" class="col-md-2 control-label">Terra indígena: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;">
+                    <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                                 ng-model="relatorioindigena.terrasindigena" 
+                                 multiple="true"
+                                 ms-selected ="{{terraIndigena.selected.length}}" 
+                                 ms-header="Selecione a terra indigena"
+                                 options="terra.nometerra for terra in terras" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="form-group" ng-init="getConvenios()">
+                <label for="nome" class="col-md-2 control-label">Convênios:</label>
+                <div class="col-md-3" style="margin-left: -1.5%;">
+                    <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                                 ng-model="relatorioindigena.convenios" 
+                                 multiple="true" 
+                                 ms-selected ="{{convenios.selected.length}}" 
+                                 ms-header="Selecione os convênios"
+                                 options="convenio.descricao for convenio in convenios" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+            </div>
+        </form>                
+    </div>    
+</div>    
+<div class="form-group" style="margin-bottom: 250px;">
+    <div class="col-md-11">
+        <button ng-click="indigenaRel('PDF')" style="margin-right: 20px;" class="btn btn-success col-md-2">Gerar em PDF</button>
+        <button ng-click="indigenaRel('EXCEL')" class="btn btn-success col-md-2">Gerar em EXCEL</button>
+    </div>
+</div>

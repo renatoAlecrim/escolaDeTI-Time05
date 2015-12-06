@@ -1,0 +1,148 @@
+body {
+        font-family: 'Roboto', Arial, Verdana, Tahoma, sans-serif;
+}
+
+.gamb-switch span.switch-info.switch-right, .gamb-switch span.switch-info.switch-right:hover {
+  background-color: #5bc0de;
+  color: #ffffff;
+}
+
+.formNovoAdmin  {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0;
+  -moz-transition: all 550ms ease-in-out;
+  -o-transition: all 550ms ease-in-out;
+  -webkit-transition: all 550ms ease-in-out;
+  transition: all 550ms ease-in-out;
+}
+
+.login-page .login-header {
+    padding-top:10%;
+/*  padding: 40px 0px 100px 0px;
+  background-image: url(../../../img/fundo_bambu.png);
+  background-repeat: no-repeat;
+  background-position: bottom center;*/
+}
+
+.alert.alertInicial {
+    position: absolute;
+    top:5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.panel-body {
+    background-color: #F0EEE9;
+}
+
+label {
+    color: #597A9E;
+}
+
+label.novoAdmin {
+    color: #FFF;
+}
+
+.panel-danger {
+  border-color: #fff;
+}
+
+.panel-danger > .panel-heading {
+  color: #fff;
+  background-color: #C72020;
+  border-color: #fff;
+}
+
+.panel-danger > .panel-heading > .panel-options > a {
+  color: #fff;
+}
+
+.form-groups-bordered > .form-group {
+  border-bottom: 1px solid #fff;
+}
+
+.requerido {
+    background-image: url(../../../img/requerido.png);
+    background-position: left 2px  center  ;
+    background-repeat: no-repeat;
+}
+
+textarea.requerido, textarea.requerido.ng-valid {
+    background-position: left 2px  top 9px  ;
+}
+
+.requerido.ng-valid {
+    background-image: url(../../../img/requeridoOk.png);
+    background-position: left 2px  center  ;
+    background-repeat: no-repeat;
+}
+
+.ng-invalid.ng-dirty {
+    border-color: #ff7c92;
+}
+
+table.table-striped tr th {
+    background-color: #555;
+    color: #fff;
+}
+
+table.table-striped tr th a {
+    padding-left: 5px;
+    color:#fff;
+}
+
+.panel .panel-footer {
+    background-color: #ddd;
+    color: #333;
+}
+
+.dataTables_wrapper table thead tr th.sorting_asc,
+.dataTables_wrapper table thead tr th.sorting_desc,
+.dataTables_wrapper table thead tr th.sorting_asc:before,
+.dataTables_wrapper table thead tr th.sorting_desc:before{
+  color: #fff;
+}
+
+.closeModal {
+  float: right;
+}
+.close:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+fieldset {
+    border:1px solid #ccc;
+    padding: 5px 10px;
+    margin-top: 15px; 
+    border-radius: 5px;
+}
+
+legend {
+    border:none;
+    width: auto;
+    font-size: 10pt;
+    padding: 0px 3px;
+    margin: 0px 4px;
+    color: #ddd;
+}
+
+.cantosArredondados img {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #888888
+}
+
+.cantosArredondados {
+    border:1px solid #ddd;
+    background-color: #eee;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.pointer {
+    cursor: pointer;
+}

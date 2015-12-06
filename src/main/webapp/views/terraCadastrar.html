@@ -1,0 +1,43 @@
+<div ng-init="carregarTerra()" class="panel panel-info">
+
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovaTerra">Cadastrar nova terra</div>
+        <div class="panel-title" ng-show="!isNovaTerra">Alterar terra</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formTerra" novalidate class="form-horizontal">
+            
+            <div class="form-group">    
+                <label for="nome" class="col-md-1 col-sm-2 control-label">Nome:</label>
+                <div class="col-md-5 col-sm-10"><input type="text" ng-model="terra.nometerra" id="nomeTerra" name="nomeTerra" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+            </div>
+
+            <div ng-show="formTerra.nomeTerra.$dirty && formTerra.nomeTerra.$invalid" class="alert alert-danger col-md-offset-1 col-md-11" role="alert">
+                <span ng-show="formTerra.nomeTerra.$error.required">Preencha o nome da terra. </span>
+                <span ng-show="formTerra.nomeTerra.$error.minlength">Terra indígena deve ter mais de 3 caracteres. </span>
+                <span ng-show="formTerra.nomeTerra.$error.maxlength">Terra indígena não pode ter mais de 50 caracteres. </span>
+            </div>
+            
+            <div class="form-group" ng-init="todasCidades()">    
+                <label for="nome" class="col-md-1 col-sm-2 control-label">Cidade:</label>
+                
+                    <multiselect id="cidade" name="cidade" class="input-lg" 
+                             ng-model="terra.cidade" 
+                             ms-header="Selecione a cidade"
+                             options='c.codigoibge as (c.descricao + " - " + c.sigla) for c in cidades' 
+                             scroll-after-rows="8"
+                             required="">
+                    </multiselect>
+               
+            </div>
+            
+        </form>
+    </div>
+</div>
+<div class="form-group">
+    <button ng-show="isNovaTerra" ng-click="salvarTerra('cad')" ng-disabled="!formTerra.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+    <button ng-show="!isNovaTerra" ng-click="salvarTerra('cad')" ng-disabled="!formTerra.$valid" class="btn btn-success col-md-2">Alterar</button>
+</div>

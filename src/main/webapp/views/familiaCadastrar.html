@@ -1,0 +1,59 @@
+<div ng-init="carregarFamilia()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovaFamilia">Cadastrar nova família</div>
+        <div class="panel-title" ng-show="!isNovaFamilia">Alterar família</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formFamilia" novalidate="" class="form-horizontal">
+            <div class="form-group">    
+                <label for="nomefamilia" class="col-md-2 control-label">Nome:</label>
+                <div class="col-md-10"><input type="text" ng-model="familia.nomefamilia" id="nomefamilia" name="nomefamilia" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=30></div>
+            </div>
+            <div ng-show="formFamilia.nomefamilia.$dirty && formFamilia.nomefamilia.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
+                <span ng-show="formFamilia.nomefamilia.$error.required">Preencha o nome da família. </span>
+                <span ng-show="formFamilia.nomefamilia.$error.minlength">Nome de família deve ter mais de 3 caracteres. </span>
+                <span ng-show="formFamilia.nomefamilia.$error.maxlength">Nome de família não pode ter mais de 30 caracteres. </span>
+            </div>
+            
+            <div class="form-group" ng-controller="IndigenaController" ng-init="todosIndigenas()">    
+                <label for="lider" class="col-md-2 control-label">Representante / líder:</label>
+                    <multiselect id="representante" name="representante" class="input-lg" 
+                             ng-model="familia.representante" 
+                             ms-header="*  Selecione o representante dessa família"
+                             options='i.codigoAssindi as (i.nome + " - " + i.nometerra) for i in indigenas' 
+                             scroll-after-rows="8"
+                             >
+                    </multiselect>
+            </div>
+            
+            <div class="form-group">
+                <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
+                <div class="col-md-3"><input type="text" ng-model="familia.telefone" id="telefone" min="10" name="telefone" required="" class="form-control sp_celphones requerido" placeholder="(99) 9999-9999"></div>
+            </div>
+            
+            <div ng-show="formInd.telefone.$dirty && formInd.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formInd.telefone.$error.required">Preencha o telefone principal. </span>
+            </div>
+            
+            <div class="form-group" ng-controller="IndigenaController" ng-init="todosIndios()">    
+                <label for="membros" class="col-md-2 control-label">Membros da família:</label>
+                    <multiselect id="membros" name="membros" class="input-lg" 
+                             ng-model="familia.membros" 
+                             ms-header="*  Selecione os membros dessa família"
+                             multiple="true" 
+                             options='i.codigoAssindi as (i.nome + " - " + i.nometerra) for i in indios' 
+                             scroll-after-rows="8"
+                             >
+                    </multiselect>
+            </div>
+            
+        </form>                
+    </div>    
+</div>    
+<div class="form-group">
+    <button ng-show="isNovaFamilia" ng-click="salvarFamilia()" ng-disabled="!formFamilia.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+    <button ng-show="!isNovaFamilia" ng-click="salvarFamilia()" ng-disabled="!formFamilia.$valid" class="btn btn-success col-md-2">Alterar</button>
+</div>

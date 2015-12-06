@@ -1,0 +1,64 @@
+<div ng-init="novoRelVisita()" class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title" >Visitas à Assindi</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formConvenio" novalidate="" class="form-horizontal">
+            <div class="form-group">    
+                <label for="periodoinicial" class="col-md-2 control-label">Periodo:</label>
+                <div class="col-md-3">
+                    <input type="date" ng-model="relatoriovisita.datainicial" id="descricao" name="descricao" class="form-control" ng-minlength=3 ng-maxlength=30>
+                </div>
+                <label for="periodofinal" class="col-md-1 control-label" style="margin-right: 5%">à</label>
+                <div class="col-md-3">
+                    <input type="date" ng-model="relatoriovisita.datafinal" id="descricao" name="descricao" class="form-control" ng-minlength=3 ng-maxlength=30>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="familia" class="col-md-2 control-label" >Entidade: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="listarJuridicas()">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatoriovisita.entidades" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione a entidade"
+                                 options="juridica.nome for juridica in juridicas" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Responsável: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;" ng-init="listarFisicas()">
+                    <multiselect class="input-lg" 
+                                 ng-model="relatoriovisita.responsaveis" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione o representante"
+                                 options="responsavel.nome for responsavel in fisicas" 
+                                 scroll-after-rows="8" required="">
+                    </multiselect>  
+                </div>
+            </div>
+            <div class="form-group">
+               <label for="etnia" class="col-md-2 control-label">Visita Realizada: </label>
+                <div class="col-md-2">
+                    <select ng-model="relatoriovisita.visitarealizada" id="etnia" name="etnia" class="form-control">
+                        <option value="">Ambos</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
+                    </select>
+                </div>
+            </div>
+        </form>                
+    </div>    
+</div>    
+<div class="form-group" style="margin-bottom: 250px;">
+    <div class="col-md-11">
+        <button ng-click="visitaRel('PDF')" style="margin-right: 20px;" class="btn btn-success col-md-2">Gerar em PDF</button>
+        <button ng-click="visitaRel('EXCEL')" class="btn btn-success col-md-2">Gerar em EXCEL</button>
+    </div>
+</div>
